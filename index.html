@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Banking Management System</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:850px;margin:auto;padding:30px 20px;background:#eef5f1;color:#173124}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:white;padding:20px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.07)}
+input,button{width:100%;padding:10px;border-radius:10px;border:1px solid #ccd8d0;box-sizing:border-box}
+button{margin-top:8px;background:#16805b;color:white;border:0;cursor:pointer}
+.balance{font-size:2rem;font-weight:800}
+#msg{min-height:1.5em}
+</style>
+</head>
+<body>
+<h1>Banking Management System</h1>
+<div class="grid">
+<section class="card"><h2>Account</h2><input id="name" placeholder="Account holder"><input id="opening" type="number" min="0" placeholder="Opening balance"><button id="create">Create account</button></section>
+<section class="card"><h2>Balance</h2><div class="balance" id="balance">₹0.00</div><input id="amount" type="number" min="0.01" placeholder="Amount"><button id="deposit">Deposit</button><button id="withdraw">Withdraw</button></section>
+</div>
+<p id="msg"></p>
+<script>
+let account=JSON.parse(localStorage.getItem("bank_account")||"null");
+const money=v=>"₹"+Number(v).toFixed(2);
+function render(){document.getElementById("balance").textContent=money(account?.balance||0);document.getElementById("name").value=account?.name||"";document.getElementById("msg").textContent=account?("Account: "+account.name):"Create an account to begin."}
+function save(){localStorage.setItem("bank_account",JSON.stringify(account));render()}
+document.getElementById("create").onclick=()=>{const name=document.getElementById("name").value.trim();const opening=Number(document.getElementById("opening").value||0);if(!name||opening<0)return document.getElementById("msg").textContent="Enter a valid name and balance.";account={name,balance:opening};save()}
+document.getElementById("deposit").onclick=()=>{if(!account)return;const n=Number(document.getElementById("amount").value);if(n>0){account.balance+=n;save()}}
+document.getElementById("withdraw").onclick=()=>{if(!account)return;const n=Number(document.getElementById("amount").value);if(n>0&&n<=account.balance){account.balance-=n;save()}else document.getElementById("msg").textContent="Insufficient balance or invalid amount."}
+render();
+</script>
+</body></html>

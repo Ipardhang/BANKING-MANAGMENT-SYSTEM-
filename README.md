@@ -1,13 +1,23 @@
 # Banking Management System
 
-A small browser-based banking management demo.
+A small browser-based banking management demo focused on local account operations.
 
 ## Features
-- Create a local demo account
+
+- Create a demo account
 - Set an opening balance
-- Deposit money
-- Withdraw money with balance validation
-- Persist demo account data with localStorage
+- Deposit funds
+- Withdraw funds with balance validation
+- Persist demo data with browser `localStorage`
 
 ## Run
-Open `index.html` in a browser.
+
+Open `index.html` in a modern browser.
+
+## Tech
+
+HTML · CSS · JavaScript
+
+## Project status
+
+This is a learning/demo project rather than a production banking system. It does not connect to a real financial institution or process real transactions.
